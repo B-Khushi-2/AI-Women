@@ -34,8 +34,6 @@ model = genai.GenerativeModel("gemini-2.5-flash")
 st.markdown("<h1 style='text-align: center; color: #FF6347;'>✨Welcome to Khushi's AI Learning Buddy ✨</h1>", unsafe_allow_html=True)
 st.markdown("<h3 style='text-align: center; color: #1E90FF;'>Unlock new knowledge with Khushi! 🚀</h3>", unsafe_allow_html=True)
 
-st.write(" ফরিদ آباد-")
-
 # Use columns for a more dynamic input layout
 col1, col2 = st.columns(2)
 
@@ -84,5 +82,4 @@ if st.button("💡 Let's Learn!", use_container_width=True, type="primary"):
                 st.info("💡 Don't worry! Try again or rephrase your topic/question. The AI might be having a moment.")
         st.markdown("</div>", unsafe_allow_html=True)
 
-st.write(" ফরিদ آباد-")
 st.markdown("<footer><p style='text-align: center; color: #808080;'>Made by Khushi Borde. Always cross-reference with reliable sources for critical information. Happy Learning! ✨</p></footer>", unsafe_allow_html=True)
