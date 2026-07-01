@@ -1,20 +1,35 @@
+import os
+
 import streamlit as st
-import google.generativeai as genai
 
-# Configure Gemini API using Streamlit secrets
-# Ensure you have your GOOGLE_API_KEY set in Streamlit Cloud secrets
-# For local development, you might set it as an environment variable or a .streamlit/secrets.toml file
-genai.configure(api_key=st.secrets["GOOGLE_API_KEY"])
+try:
+    import google.generativeai as genai
+except ModuleNotFoundError:
+    genai = None
 
-model = genai.GenerativeModel("gemini-2.5-flash")
-
-# Configure page
+# Configure page first, as required by Streamlit
 st.set_page_config(
     page_title="Welcome to your AI Learning Buddy Khushi",
     page_icon="💡",
     layout="wide",
     menu_items={'About': None, 'Report a bug': None, 'Get help': None}
 )
+
+# Configure Gemini API using Streamlit secrets or a local environment variable
+# This avoids deployment crashes when the API key is missing.
+api_key = st.secrets.get("GOOGLE_API_KEY", os.getenv("GOOGLE_API_KEY", ""))
+
+if not api_key:
+    st.error("⚠️ Missing Google API key. Add GOOGLE_API_KEY in Streamlit Cloud secrets or set it as an environment variable.")
+    st.stop()
+
+if genai is None:
+    st.error("⚠️ The Gemini package could not be imported. Please ensure the dependency is installed in the deployment environment.")
+    st.stop()
+
+genai.configure(api_key=api_key)
+
+model = genai.GenerativeModel("gemini-2.5-flash")
 
 st.markdown("<h1 style='text-align: center; color: #FF6347;'>✨Welcome to Khushi's AI Learning Buddy ✨</h1>", unsafe_allow_html=True)
 st.markdown("<h3 style='text-align: center; color: #1E90FF;'>Unlock new knowledge with Khushi! 🚀</h3>", unsafe_allow_html=True)
